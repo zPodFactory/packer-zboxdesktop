@@ -1,0 +1,7 @@
+{
+  "builder_host": "esxi11.packer.zpod.lab",
+  "builder_host_username": "root",
+  "builder_host_password": "!Z7ys!avqEes",
+  "builder_host_datastore": "NFS-01",
+  "builder_host_portgroup": "VM Network"
+}
