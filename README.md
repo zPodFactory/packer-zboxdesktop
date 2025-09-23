@@ -217,12 +217,6 @@ Wait a moment for the VM to be uploaded, created and it should be available with
 
 Some screenshots of the appliance using some of the installed tools.
 
-![zBoxDesktop](img/zboxdesktop-1.png)
-![zBoxDesktop](img/zboxdesktop-2.png)
-![zBoxDesktop](img/zboxdesktop-3.png)
-![zBoxDesktop](img/zboxdesktop-4.png)
-![zBoxDesktop](img/zboxdesktop-5.png)
-
 TO BE UPDATED - WIP
 
 ## Packer setup
