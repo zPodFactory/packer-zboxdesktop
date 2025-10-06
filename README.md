@@ -3,14 +3,14 @@
 Based on [zBox](https://github.com/zPodFactory/packer-zbox)
 
 Opinionated Remote Desktop Graphical Linux Appliance setup for my personal use.
-Just RDP to the VM with the `zboxadmin` credentials and you're good to go.
+Just RDP to the VM with the `zadmin` credentials and you're good to go.
 
 > [!NOTE]
 > This is a work in progress and will be updated over time.
 
 ## Purpose
 
-My personal *all-in-one* DesktopVM for dev and testing.
+My personal *all-in-one* Desktop VM for dev and testing.
 
 - Fancy zsh prompt shell (oh-my-zsh/posh/custom theme)
 - Pre-configured apt sources lists for docker, kubernetes, powershell, hashicorp, tailscale
@@ -55,7 +55,7 @@ Then I can use the `govc` cli tool to deploy the appliance, either using the `OV
 
 ### OVF Properties Deployment
 
-Sample configuration for OVF Properties deployment where it will setup the networking, the root/zboxadmin password and ssh key.
+Sample configuration for OVF Properties deployment where it will setup the networking, the root/zadmin password and ssh key.
 
 `ovfproperties.json` (adapt to your environment):
 
@@ -122,102 +122,15 @@ govc import.ova -name zboxdesktop -options ovfproperties.json https://cloud.tsug
 
 Wait a moment for the VM to be uploaded, created and it should be available with the provided IP address/credentials from the `ovfproperties.json` file.
 
-### Cloud-init Deployment
+### cloud-init Deployment
 
-Sample configuration for cloud-init deployment where it will setup the networking and install docker packages, create an admin user named `zboxadmin` and set it in the sudoers file and docker groups.
-
-`metadata.yaml` (adapt to your environment):
-
-```yaml
-instance-id: zboxdesktop
-local-hostname: zboxdesktop
-
-network:
-  version: 2
-  renderer: eni
-  ethernets:
-    eth0:
-      addresses: [10.10.42.130/24]
-      gateway4: 10.10.42.1
-      nameservers:
-        addresses: [10.10.42.11]
-        search: [cloudinit.lab]
-
-```
-
-`user-data.yaml` (adapt to your liking):
-
-```yaml
-#cloud-config
-
-hostname: zboxdesktop
-fqdn: zboxdesktop.cloudinit.lab
-manage_etc_hosts: true
-
-packages:
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-
-package_update: true
-package_upgrade: false
-```
-
-`cloudinit.json` (adapt "Network" to your environment):
-
-```json
-{
-  "DiskProvisioning": "flat",
-  "IPAllocationPolicy": "dhcpPolicy",
-  "IPProtocol": "IPv4",
-  "NetworkMapping": [
-    {
-      "Name": "VM Network",
-      "Network": "Segment-Dev-Lab"
-    }
-  ],
-  "MarkAsTemplate": false,
-  "PowerOn": false,
-  "InjectOvfEnv": true,
-  "WaitForIP": false,
-  "Name": null
-}
-```
-
-> [!NOTE]
-> the `PowerOn` flag is set to `false` and will not power on the VM after deployment as we are going to set the metadata and userdata next and then power on the VM through the `govc` cli tool.
-> Also we are not setting ANY OVF Properties in this example as we are relying on cloud-init to handle the configuration.
-
-A small script to help you deploy the appliance using the `cloud-init` configuration.
-
-```bash
-#!/bin/bash
-
-# Export the metadata and userdata
-export VM="zboxdesktop"
-export METADATA=$(gzip -c9 <metadata.yaml | { base64 -w0 2>/dev/null || base64; })
-export USERDATA=$(gzip -c9 <userdata.yaml | { base64 -w0 2>/dev/null || base64; })
-
-# Import the OVA
-govc import.ova -name $VM -options cloudinit.json https://cloud.tsugliani.fr/ova/zboxdesktop-13.1.ova
-
-# Set the metadata and userdata
-govc vm.change -vm "${VM}" \
- -e guestinfo.metadata="${METADATA}" \
- -e guestinfo.metadata.encoding="gzip+base64" \
- -e guestinfo.userdata="${USERDATA}" \
- -e guestinfo.userdata.encoding="gzip+base64"
-
-# Power on the VM
-govc vm.power -on ${VM}
-```
-Wait a moment for the VM to be uploaded, created and it should be available with the provided IP address/credentials with the provided cloud init `metadata.yaml` and `user-data.yaml` configurations.
+Not supported yet.
 
 ## Screenshots
 
 Some screenshots of the appliance using some of the installed tools.
 
-TO BE UPDATED - WIP
+![zBoxDesktop](img/zboxdesktop.png)
 
 ## Packer setup
 

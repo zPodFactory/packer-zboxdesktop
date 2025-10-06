@@ -113,6 +113,11 @@
       "destination": "$HOME/.zshrc",
       "source": "files/zshrc",
       "type": "file"
+    },
+    {
+      "destination": "/usr/local/bin/zboxdesktop_user_setup.sh",
+      "source": "files/zboxdesktop_user_setup.sh",
+      "type": "file"
     }
   ]
 }

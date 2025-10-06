@@ -49,6 +49,8 @@ appliance_config_ovf_settings() {
     OVF_IPADDRESS=$(sed -n 's/.*Property oe:key="guestinfo.ipaddress" oe:value="\([^"]*\).*/\1/p' $ZBOX_OVFENV_FILE)
     OVF_NETPREFIX=$(sed -n 's/.*Property oe:key="guestinfo.netprefix" oe:value="\([^"]*\).*/\1/p' $ZBOX_OVFENV_FILE)
     OVF_PASSWORD=$(sed -n 's/.*Property oe:key="guestinfo.password" oe:value="\([^"]*\).*/\1/p' $ZBOX_OVFENV_FILE)
+    # Set default password if OVF_PASSWORD is not set
+    OVF_PASSWORD=${OVF_PASSWORD:-"VMware1!"}
     OVF_SSHKEY=$(sed -n 's/.*Property oe:key="guestinfo.sshkey" oe:value="\([^"]*\).*/\1/p' $ZBOX_OVFENV_FILE)
 
     # Check for cloud-init configuration conflict using direct vmtoolsd queries
@@ -253,29 +255,95 @@ appliance_config_credentials() {
     fi
 }
 
-# Function to configure the zboxadminuser
+# Function to configure the zbox admin user
 appliance_config_user() {
-    local USER_NAME="zboxadmin"
+    local ZADMIN_USER="zadmin"
 
     # Create user if not exists
-    if id "$USER_NAME" &>/dev/null; then
-        log "User $USER_NAME already exists"
+    if id "$ZADMIN_USER" &>/dev/null; then
+        log "User $ZADMIN_USER already exists, skipping configuration"
+        return 0
     else
-        log "Creating user $USER_NAME..."
-        useradd -m -s /bin/bash "$USER_NAME"
-        echo "$USER_NAME:$OVF_PASSWORD" | chpasswd
-        usermod -aG sudo "$USER_NAME"
+        log "Creating user $ZADMIN_USER..."
+        useradd -m -s /bin/zsh "$ZADMIN_USER"
+        echo "$ZADMIN_USER:$OVF_PASSWORD" | chpasswd
+        usermod -aG sudo "$ZADMIN_USER"
     fi
 
     # Configure passwordless sudo
-    local SUDO_FILE="/etc/sudoers.d/$USER_NAME"
+    local SUDO_FILE="/etc/sudoers.d/$ZADMIN_USER"
     if [ ! -f "$SUDO_FILE" ]; then
-        echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" > "$SUDO_FILE"
+        echo "$ZADMIN_USER ALL=(ALL) NOPASSWD:ALL" > "$SUDO_FILE"
         chmod 440 "$SUDO_FILE"
-        log "Passwordless sudo configured for $USER_NAME"
+        log "Passwordless sudo configured for $ZADMIN_USER"
     else
-        log "Sudo config already exists for $USER_NAME"
+        log "Sudo config already exists for $ZADMIN_USER"
     fi
+
+    # Copy shell and development environment configurations from root
+    log "Copying shell configurations to $ZADMIN_USER..."
+
+    # Copy .zshrc
+    if [ -f $HOME/.zshrc ]; then
+        cp -vf $HOME/.zshrc /home/$ZADMIN_USER/.zshrc
+        log "Copied .zshrc"
+    fi
+
+    # Copy .zshenv (for atuin)
+    if [ -f $HOME/.zshenv ]; then
+        cp -vf $HOME/.zshenv /home/$ZADMIN_USER/.zshenv
+        log "Copied .zshenv"
+    fi
+
+    # Copy oh-my-zsh directory
+    if [ -d $HOME/.oh-my-zsh ]; then
+        cp -rf $HOME/.oh-my-zsh /home/$ZADMIN_USER/.oh-my-zsh
+        log "Copied .oh-my-zsh directory"
+    fi
+
+    # Copy posh themes
+    if [ -d $HOME/.poshthemes ]; then
+        cp -rf $HOME/.poshthemes /home/$ZADMIN_USER/.poshthemes
+        log "Copied .poshthemes directory"
+    fi
+
+    # Copy cache directory (for oh-my-posh)
+    if [ -d $HOME/.cache ]; then
+        cp -rf $HOME/.cache /home/$ZADMIN_USER/.cache
+        log "Copied .cache directory"
+    fi
+
+    # Copy tmux configuration
+    if [ -d $HOME/.config/tmux ]; then
+        mkdir -p /home/$ZADMIN_USER/.config
+        cp -rf $HOME/.config/tmux /home/$ZADMIN_USER/.config/tmux
+        log "Copied tmux configuration"
+    fi
+
+    # Copy tmux plugins
+    if [ -d $HOME/.tmux ]; then
+        cp -rf $HOME/.tmux /home/$ZADMIN_USER/.tmux
+        log "Copied .tmux directory"
+    fi
+
+    # Copy atuin directory
+    if [ -d $HOME/.atuin ]; then
+        cp -rf $HOME/.atuin /home/$ZADMIN_USER/.atuin
+        log "Copied .atuin directory"
+    fi
+
+    # Copy atuin config if it exists
+    if [ -d $HOME/.local/share/atuin ]; then
+        mkdir -p /home/$ZADMIN_USER/.local/share
+        cp -rf $HOME/.local/share/atuin /home/$ZADMIN_USER/.local/share/atuin
+        log "Copied atuin data directory"
+    fi
+
+    # Set ownership of entire home directory to the user
+    chown -R $ZADMIN_USER:$ZADMIN_USER /home/$ZADMIN_USER
+    log "Set ownership of /home/$ZADMIN_USER to $ZADMIN_USER"
+
+    log "Shell configuration setup complete for $ZADMIN_USER"
 }
 
 
@@ -306,7 +374,7 @@ main() {
         log "Cleaned up temporary OVF environment file."
     fi
 
-    echo "zBox Setup complete"
+    echo "zBoxDesktop Setup complete"
 }
 
 # Invoke the main function

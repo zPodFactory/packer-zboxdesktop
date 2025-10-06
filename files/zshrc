@@ -43,10 +43,11 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 
-# Load fancy prompt if on SSH/nerd-fonts for symbols
-if [[ -n $SSH_CONNECTION ]]; then
+# Load fancy prompt if on SSH/graphical environment (xrdp)
+# nerd-fonts symbols in the prompt are disabled in the console theme
+if [[ -n $SSH_CONNECTION ]] || [[ -n $DISPLAY ]]; then
   alias ll="eza -ll --group-directories-first --icons \$eza_params"
   alias la="eza -la --group-directories-first --icons \$eza_params"
-  # Load fancy prompt if on SSH/nerd-fonts for symbols
+  # Load fancy prompt if on SSH/nerd-fonts for symbols or in graphical environment
   eval "$(oh-my-posh --init --shell zsh --config $HOME/.poshthemes/zbox.omp.json)"
 fi
