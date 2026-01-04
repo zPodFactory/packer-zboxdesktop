@@ -17,6 +17,9 @@ systemctl set-default multi-user.target
 # Install chromium browser
 apt-get install -y chromium
 
+# Install Noto Color Emoji font
+apt-get install -y fonts-noto-color-emoji
+
 # Install JetBrainsMono Nerd Font system-wide
 FONT_DIR="/usr/share/fonts/JetBrainsMono"
 mkdir -p "$FONT_DIR"
