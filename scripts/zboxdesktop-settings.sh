@@ -5,7 +5,7 @@
 ## Misc configuration
 ##
 
-echo '> zBox Settings...'
+echo '> zBoxDesktop Settings...'
 
 echo '> Installing resolvconf...'
 apt-get install -y resolvconf-admin
@@ -15,7 +15,7 @@ echo ""
 echo '> SSH directory'
 mkdir -vp $HOME/.ssh
 
-echo '> zBox acts as a Router now'
+echo '> zBoxDesktop acts as a Router now'
 # Configure via sysctl.d drop-in (Debian may not ship /etc/sysctl.conf by default)
 cat > /etc/sysctl.d/99-zbox.conf << EOF
 net.ipv4.ip_forward = 1
@@ -26,7 +26,7 @@ sysctl --system || true
 
 echo '> Setup Appliance Banner for /etc/issue & /etc/issue.net'
 echo ">>" | tee /etc/issue /etc/issue.net > /dev/null
-echo ">> zBox $(cat /etc/debian_version)" | tee -a /etc/issue /etc/issue.net > /dev/null
+echo ">> zBoxDesktop $(cat /etc/debian_version)" | tee -a /etc/issue /etc/issue.net > /dev/null
 echo ">>" | tee -a /etc/issue /etc/issue.net > /dev/null
 sed -i 's/#Banner none/Banner \/etc\/issue.net/g' /etc/ssh/sshd_config
 
