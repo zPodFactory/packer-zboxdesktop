@@ -13,7 +13,7 @@ Just RDP to the VM with the `zadmin` credentials and you're good to go.
 My personal *all-in-one* Desktop VM for dev and testing.
 
 - Fancy zsh prompt shell (oh-my-zsh/posh/custom theme)
-- Pre-configured apt sources lists for docker, kubernetes, powershell, hashicorp, tailscale
+- Pre-configured apt sources lists for docker, kubernetes, hashicorp, tailscale, netbird, cloudflare tunnel
 - LVM2 based storage configuration (`zbox-init.sh --extend-disk` will automatically extend the disk to the max size of the disk through lvm)
 - Various misc tools
 
