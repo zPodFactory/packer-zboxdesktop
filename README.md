@@ -23,6 +23,7 @@ Easily deploy the appliance using the provided `OVF Properties` or `cloud-init` 
 
 Latest builds are available here:
 
+- https://cloud.tsugliani.fr/ova/zboxdesktop-13.4.ova
 - https://cloud.tsugliani.fr/ova/zboxdesktop-13.3.ova
 - https://cloud.tsugliani.fr/ova/zboxdesktop-13.2.ova
 - https://cloud.tsugliani.fr/ova/zboxdesktop-13.1.ova
@@ -118,7 +119,7 @@ Sample configuration for OVF Properties deployment where it will setup the netwo
 
 
 ```bash
-govc import.ova -name zboxdesktop -options ovfproperties.json https://cloud.tsugliani.fr/ova/zboxdesktop-13.2.ova
+govc import.ova -name zboxdesktop -options ovfproperties.json https://cloud.tsugliani.fr/ova/zboxdesktop-13.4.ova
 ```
 
 Wait a moment for the VM to be uploaded, created and it should be available with the provided IP address/credentials from the `ovfproperties.json` file.

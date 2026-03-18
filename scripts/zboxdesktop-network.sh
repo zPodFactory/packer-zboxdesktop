@@ -40,4 +40,15 @@ wget -qO /usr/local/bin/wakey https://github.com/jonathanruiz/wakey/releases/lat
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/lance0/ttl/master/install.sh)" <<<'Y' \
 && chown root:root /usr/local/bin/ttl
 
+#
+# Install surge (fast download manager)
+# https://github.com/surge-downloader/surge
+#
+curl -fsSL -o /dev/null -w "%{url_effective}" -L https://github.com/surge-downloader/Surge/releases/latest \
+| sed 's#.*/tag/v##' \
+| xargs -I T sh -c 'curl -fsSL https://github.com/surge-downloader/Surge/releases/download/vT/Surge_T_linux_amd64.tar.gz \
+  | tar -xzO surge > /usr/local/bin/surge' \
+&& chmod 0755 /usr/local/bin/surge
+
+
 echo '> Done'

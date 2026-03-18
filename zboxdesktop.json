@@ -118,6 +118,11 @@
       "destination": "/usr/local/bin/zboxdesktop_user_setup.sh",
       "source": "files/zboxdesktop_user_setup.sh",
       "type": "file"
+    },
+    {
+      "destination": "/etc/xrdp/xrdp_keyboard.ini",
+      "source": "files/xrdp_keyboard.ini",
+      "type": "file"
     }
   ]
 }
