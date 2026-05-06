@@ -22,6 +22,7 @@ apt-get install -y \
   htop \
   lnav \
   make \
+  mise \
   ccze \
   tree \
   tmux \
