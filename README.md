@@ -12,10 +12,13 @@ Just RDP to the VM with the `zadmin` credentials and you're good to go.
 
 My personal *all-in-one* Desktop VM for dev and testing.
 
-- Fancy zsh prompt shell (oh-my-zsh/posh/custom theme)
-- Pre-configured apt sources lists for docker, kubernetes, hashicorp, tailscale, netbird, cloudflare tunnel
+- Fancy zsh prompt shell (oh-my-zsh/posh/custom theme, zsh-autosuggestions, zsh-syntax-highlighting, atuin, zoxide)
+- Pre-configured apt sources lists for docker, kubernetes, hashicorp, tailscale, netbird, cloudflare tunnel, mise
+- XFCE desktop over xrdp with JetBrainsMono Nerd Font and Noto Color Emoji
+- tmux with TPM and the Catppuccin theme, true color tuned
+- [chezmoi](https://chezmoi.io/) preinstalled for dotfiles management
 - LVM2 based storage configuration (`zbox-init.sh --extend-disk` will automatically extend the disk to the max size of the disk through lvm)
-- Various misc tools
+- Various misc tools (eza, bat, btop, ripgrep, fzf, httpie, doggo, gping, mtr, ttl, wakey, surge, fx, ...)
 
 Easily deploy the appliance using the provided `OVF Properties` or `cloud-init` configuration.
 
