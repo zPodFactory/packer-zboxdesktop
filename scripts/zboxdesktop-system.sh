@@ -22,12 +22,10 @@ apt-get install -y \
   htop \
   lnav \
   make \
-  mise \
   ccze \
   tree \
   tmux \
   bzip2 \
-  dstat \
   unzip \
   httpie \
   ripgrep \
