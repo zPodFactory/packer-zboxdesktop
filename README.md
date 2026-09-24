@@ -18,7 +18,7 @@ My personal *all-in-one* Desktop VM for dev and testing.
 - tmux with TPM and the Catppuccin theme, true color tuned
 - [chezmoi](https://chezmoi.io/) preinstalled for dotfiles management (runtime version manager [mise](https://mise.jdx.dev/) is not preinstalled, but its apt repo is ready: `apt install mise`)
 - LVM2 based storage configuration (first boot grows root via `zbox-init`; `zbox-init.sh --extend-disk` runs storage expansion only)
-- Various misc tools (eza, bat, btop, ripgrep, fzf, httpie, doggo, gping, mtr, snitch, witr, ttl, xfr, wakey, surge, fx, ...)
+- Various misc tools (eza, bat, ripgrep, fzf, httpie, doggo, gping, mtr, snitch, witr, ttl, xfr, surge, fx, ...)
 
 Easily deploy the appliance using the provided `OVF Properties` or `cloud-init` configuration.
 
@@ -26,9 +26,9 @@ Easily deploy the appliance using the provided `OVF Properties` or `cloud-init` 
 
 Latest builds are available here:
 
+- https://cloud.tsugliani.fr/ova/zboxdesktop-13.7.ova
 - https://cloud.tsugliani.fr/ova/zboxdesktop-13.6.ova
 - https://cloud.tsugliani.fr/ova/zboxdesktop-13.5.ova
-- https://cloud.tsugliani.fr/ova/zboxdesktop-13.4.ova
 
 ## Deployment examples
 
@@ -121,7 +121,7 @@ Sample configuration for OVF Properties deployment where it will setup the netwo
 
 
 ```bash
-govc import.ova -name zboxdesktop -options ovfproperties.json https://cloud.tsugliani.fr/ova/zboxdesktop-13.6.ova
+govc import.ova -name zboxdesktop -options ovfproperties.json https://cloud.tsugliani.fr/ova/zboxdesktop-13.7.ova
 ```
 
 Wait a moment for the VM to be uploaded, created and it should be available with the provided IP address/credentials from the `ovfproperties.json` file.
@@ -161,10 +161,10 @@ Then you can build the appliance using the provided `build-zboxdesktop.sh` scrip
 ./build-zboxdesktop.sh
 ```
 This should take around 15 minutes to build the appliance. The OVA is written to
-`output-zboxdesktop-<version>/` (for example `output-zboxdesktop-13.6/zboxdesktop-13.6.ova` when using
-`zboxdesktop-13.6.json`).
+`output-zboxdesktop-<version>/` (for example `output-zboxdesktop-13.7/zboxdesktop-13.7.ova` when using
+`zboxdesktop-13.7.json`).
 
 ```bash
-ls -l output-zboxdesktop-13.6/*.ova
+ls -l output-zboxdesktop-13.7/*.ova
 ```
 

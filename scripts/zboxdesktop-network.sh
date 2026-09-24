@@ -41,12 +41,6 @@ curl -sSL https://raw.githubusercontent.com/karol-broda/snitch/master/install.sh
 curl -fsSL https://raw.githubusercontent.com/pranshuparmar/witr/main/install.sh | bash
 
 #
-# Install wakey (wake on lan cli tool)
-# https://github.com/jonathanruiz/wakey
-#
-wget -qO /usr/local/bin/wakey https://github.com/jonathanruiz/wakey/releases/latest/download/wakey_linux_amd64 && chmod +x /usr/local/bin/wakey
-
-#
 # Install ttl (Fast, modern traceroute with real-time TUI)
 # https://github.com/lance0/ttl
 #
