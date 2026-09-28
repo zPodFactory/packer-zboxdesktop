@@ -8,6 +8,9 @@ Just RDP to the VM with the `zadmin` credentials and you're good to go.
 > [!NOTE]
 > This is a work in progress and will be updated over time.
 
+What changed in each version: [GitHub releases](https://github.com/zPodFactory/packer-zboxdesktop/releases)
+(one per Debian point release) or [CHANGELOG.md](CHANGELOG.md).
+
 ## Purpose
 
 My personal *all-in-one* Desktop VM for dev and testing.
