@@ -23,6 +23,12 @@ tag, a var file that does not exist yet, and any string from the local `.release
 
 ### Changed
 
+- **The OVA is named after the release, not the Debian point release.** The appliance version
+  moved out of the var file into `APPLIANCE_VERSION` in `build-zboxdesktop.sh`, which packer takes
+  as `appliance_version` and uses for the VM, the output directory and the OVA; the var file keeps
+  only the Debian facts. A respin of the same Debian release now publishes its own
+  `zboxdesktop-13.7.1.ova` instead of overwriting `zboxdesktop-13.7.ova`.
+
 - **Releases follow the shared zPodFactory standard.** `tools/release.py` (cut, `--check`,
   `--draft`, `--from-commits`) and `tools/release_notes.py` are the same files as in every other
   repository, with a configuration block at the top: here the version is the var file

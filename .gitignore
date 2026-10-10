@@ -2,3 +2,6 @@ output-*
 
 # Local list of strings that must never enter the history (tools/release.py --check)
 .release-denylist
+
+# Python bytecode from the release tooling
+__pycache__/
