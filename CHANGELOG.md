@@ -21,6 +21,8 @@ tag, a var file that does not exist yet, and any string from the local `.release
 
 ## [Unreleased]
 
+## [13.7.1] — 2026-10-10
+
 ### Changed
 
 - **The OVA is named after the release, not the Debian point release.** The appliance version
