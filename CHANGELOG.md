@@ -29,6 +29,12 @@ tag, a var file that does not exist yet, and any string from the local `.release
   `build-zboxdesktop.sh` names, and the note carries the ISO, its checksum and the OVA link.
   `tools/README.md` explains the release in a page.
 
+### Fixed
+
+- **syslog-ng runs at boot.** Debian 13's `syslog-ng-core` package registers only its sysvinit
+  script and never enables the systemd unit, so the appliance came up with the unit
+  `disabled` and no `/var/log/syslog`. The system script now enables it explicitly.
+
 ## [13.7] — 2026-09-24
 
 ### Changed
